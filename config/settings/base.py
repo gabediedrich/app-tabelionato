@@ -42,15 +42,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
 DATABASES = {
-    #"default": env.db("DATABASE_URL", default="postgres:///app_tabelionato")
-    'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'app_tabelionato',
-            'USER': 'postgres',
-            'PASSWORD': 'postgres',
-            'HOST': '127.0.0.1',
-            'PORT': '5432',
-        }
+    "default": env.db("DATABASE_URL", default="postgres:///app_tabelionato")
 }
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
