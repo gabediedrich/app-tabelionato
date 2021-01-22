@@ -27,7 +27,8 @@ class Category(models.Model):
 
 class Question(models.Model):
     """
-    Classe base para as questões
+    Classe base para as questões, contém
+    categoria, enunciado e explicação
     """
 
     category = models.ForeignKey(Category,
@@ -46,7 +47,7 @@ class Question(models.Model):
                                    help_text=_("Explicação que deve ser exibida após "
                                                "a questão ser respondida"),
                                    verbose_name=_('Explicação'))
-    
+
     def __str__(self):
         return self.content
 
@@ -76,20 +77,74 @@ class MultiChoiceQuestion(Question):
     def answer_choice_to_string(self, guess):
         return Answer.objects.get(id=guess).content
 
+class TrueFalseQuestion(Question):
+
+    is_correct = models.BooleanField(blank=False,
+                                  default=False,
+                                  verbose_name="Correto",
+                                  help_text="Marque se o enunciado for verdadeiro. "
+                                            "Deixe em branco se for falso."
+    )
+
+    def check_answer(self, guess):
+        if not isinstance(guess, bool):
+            return False
+
+        if guess == self.is_correct:
+            return True
+        else:
+            return False
+
+    def get_answer(self):
+        return self.is_correct
+
+    def get_answers_list(self):
+        return [(True, True), (False, False)]
+
+    def __str__(self):
+        return [
+            {'content': self.content,
+             'answer': self.is_correct}
+        ]
+
 class Answer(models.Model):
-    question = models.ForeignKey(MultiChoiceQuestion, 
-                                 verbose_name=_("Questão"), 
+    """
+    Modelo base de resposta, não há alternativa
+    correta.
+    """
+    question = models.ForeignKey(MultiChoiceQuestion,
+                                 verbose_name=_("Questão"),
                                  on_delete=models.CASCADE)
 
     content = models.CharField(max_length=1000,
                                blank=False,
                                help_text=_("Insira o texto da alternativa que será exibido."),
-                               verbose_name=_("Alnternativa"))
+                               verbose_name=_("Alternativa"))
 
+    # TODO Adicionar validador
+
+    def __str__(self):
+        return self.content
+
+class ClosedAnswer(Answer):
+    """
+    Modelo de resposta em que a alternativa
+    é ou verdadeira ou falsa
+    """
     is_correct = models.BooleanField(blank=False,
                                   default=False,
                                   help_text=_("Esta é a resposta correta?"),
                                   verbose_name=_("Correta"))
+    # TODO Adicionar validador
 
     def __str__(self):
-        return self.content
+        return [
+            {'content': self.content,
+             'answer': self.is_correct}
+        ]
+
+# TODO Modelo de resposta de questão aberta (texto)
+# Possivelmente engloba
+# user.id, hora do envio,
+# avaliação,  hora da avaliação
+# avaliador, comentário do avaliador
