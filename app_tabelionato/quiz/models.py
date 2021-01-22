@@ -7,8 +7,23 @@ from django.utils.translation import gettext_lazy as _
 
 class CategoryManager(models.Manager):
 
+    def clean_word(word):
+        PT_CHARS = {
+            'à': 'a', 'á': 'a', 'â': 'a', 'ã': 'a',
+            'ò': 'o', 'ó': 'o', 'ô': 'o', 'õ': 'o',
+            'è': 'e', 'é': 'e', 'ê': 'e',
+            'ì': 'i', 'í': 'i',
+            'ù': 'u', 'ú': 'u',
+            'ñ': 'n', 'ç': 'c', ' ': '-'
+        }
+        word = word.lower()
+        if word in PT_CHARS:
+            return PT_CHARS[word.lower()]
+        else:
+            return '_'
+
     def new_category(self, category):
-        new_category = self.create(category=re.sub('\s+', '-', category).lower())
+        new_category = self.create(category=re.sub('\W', clean_word, category).lower())
 
         new_category.save()
         return new_category
@@ -112,7 +127,7 @@ class Answer(models.Model):
     Modelo base de resposta, não há alternativa
     correta.
     """
-    question = models.ForeignKey(MultiChoiceQuestion,
+    question = models.ForeignKey(Question,
                                  verbose_name=_("Questão"),
                                  on_delete=models.CASCADE)
 
