@@ -8,8 +8,6 @@ class User(AbstractUser):
     """Default user for App Tabelionato."""
 
     name = CharField(_("Nome completo"), blank=True, max_length=255)
-    
-
 
     def get_absolute_url(self):
         """Get url for user's detail view.

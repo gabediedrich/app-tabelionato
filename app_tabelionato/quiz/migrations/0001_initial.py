@@ -8,59 +8,170 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Answer',
+            name="Answer",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content', models.CharField(help_text='Insira o texto da alternativa que será exibido.', max_length=1000, verbose_name='Alternativa')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "content",
+                    models.CharField(
+                        help_text="Insira o texto da alternativa que será exibido.",
+                        max_length=1000,
+                        verbose_name="Alternativa",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Category',
+            name="Category",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('category', models.CharField(blank=True, max_length=250, null=True, unique=True, verbose_name='Categoria')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "category",
+                    models.CharField(
+                        blank=True,
+                        max_length=250,
+                        null=True,
+                        unique=True,
+                        verbose_name="Categoria",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Question',
+            name="Question",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content', models.CharField(help_text='Insira o enunciado que deve ser exibido ', max_length=1000, verbose_name='Questão')),
-                ('explanation', models.TextField(blank=True, help_text='Explicação que deve ser exibida após a questão ser respondida', max_length=2000, verbose_name='Explicação')),
-                ('category', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='quiz.Category', verbose_name='Categoria')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "content",
+                    models.CharField(
+                        help_text="Insira o enunciado que deve ser exibido ",
+                        max_length=1000,
+                        verbose_name="Questão",
+                    ),
+                ),
+                (
+                    "explanation",
+                    models.TextField(
+                        blank=True,
+                        help_text="Explicação que deve ser exibida após a questão ser respondida",
+                        max_length=2000,
+                        verbose_name="Explicação",
+                    ),
+                ),
+                (
+                    "category",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="quiz.Category",
+                        verbose_name="Categoria",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='ClosedAnswer',
+            name="ClosedAnswer",
             fields=[
-                ('answer_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='quiz.Answer')),
-                ('is_correct', models.BooleanField(default=False, help_text='Esta é a resposta correta?', verbose_name='Correta')),
+                (
+                    "answer_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="quiz.Answer",
+                    ),
+                ),
+                (
+                    "is_correct",
+                    models.BooleanField(
+                        default=False,
+                        help_text="Esta é a resposta correta?",
+                        verbose_name="Correta",
+                    ),
+                ),
             ],
-            bases=('quiz.answer',),
+            bases=("quiz.answer",),
         ),
         migrations.CreateModel(
-            name='MultiChoiceQuestion',
+            name="MultiChoiceQuestion",
             fields=[
-                ('question_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='quiz.Question')),
+                (
+                    "question_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="quiz.Question",
+                    ),
+                ),
             ],
-            bases=('quiz.question',),
+            bases=("quiz.question",),
         ),
         migrations.CreateModel(
-            name='TrueFalseQuestion',
+            name="TrueFalseQuestion",
             fields=[
-                ('question_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='quiz.Question')),
-                ('is_correct', models.BooleanField(default=False, help_text='Marque se o enunciado for verdadeiro. Deixe em branco se for falso.', verbose_name='Correto')),
+                (
+                    "question_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="quiz.Question",
+                    ),
+                ),
+                (
+                    "is_correct",
+                    models.BooleanField(
+                        default=False,
+                        help_text="Marque se o enunciado for verdadeiro. Deixe em branco se for falso.",
+                        verbose_name="Correto",
+                    ),
+                ),
             ],
-            bases=('quiz.question',),
+            bases=("quiz.question",),
         ),
         migrations.AddField(
-            model_name='answer',
-            name='question',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='quiz.Question', verbose_name='Questão'),
+            model_name="answer",
+            name="question",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to="quiz.Question",
+                verbose_name="Questão",
+            ),
         ),
     ]
