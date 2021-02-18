@@ -1,0 +1,44 @@
+{% extends 'quiz/base_quiz.html' %}
+{% load quiz_tags %}
+
+{% block content %}
+
+  <div class="card text-white bg-primary  mb-3 align-items-center" style="max-width: 40rem;">
+    <div class="card-header text-white bg-primary  mb-3" style="max-width: 40rem;">Resultado</div>
+
+  {% for question_id in request.session.q_data.question_list %}
+
+    <div class="card text-white bg-secondary mb-3" style=" width: 36rem;">
+      <div class="card-header">Pergunta {{ question_id }}</div>
+      <div class="card-body">
+        <h6>{{ question_list|get_item:question_id }}</h6>
+
+          <div class="radiolist">
+            {% for a, value in request.session.history|get_item:question_id %}
+              {{ a }} >>> {{ value }}
+              {% for answer_id, answer_content in value %}
+                <div>
+                  <input type="radio" name="guess" class="form-check-input"
+                         id="{{ question_id }}_{{ answer_id }}"
+                  >
+                  <label class="form-check-label" for="{{ question_id }}_{{ answer_id }}">
+                    {{ answer_content }}
+                  </label>
+                </div>
+              {% endfor %}
+            {% endfor %}
+
+          </div>
+
+      </div>
+    </div>
+
+  {% endfor %}
+
+  </div>
+
+  {{ request.session.history|get_item:'1' }}
+  -----------
+  {{ answer_list }}
+
+{% endblock content %}

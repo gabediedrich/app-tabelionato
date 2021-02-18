@@ -1,0 +1,25 @@
+{% extends 'quiz/base_quiz.html' %}
+
+{% block content %}
+
+<div class="card text-white bg-info mb-3" style="max-width: 36rem;">
+
+  <div class="card-header">Pergunta {{ request.session.q_data.current_question|add:"1" }}</div>
+  <div class="card-body"></div>
+    <form method="POST">
+      <h5 class="card-title" id="question">{{ question.content }}</h5>
+      {% csrf_token %}
+        <div class="radiolist">
+          {% for answer in answers %}
+            <div>
+                <input type="radio" name="guess" class="form-check-input" id="answer_{{ answer.0 }}" value="{{ answer.0 }}" required>
+                <label class="form-check-label" for="answer_{{ answer.0 }}">  {{ answer.1 }} </label>
+            </div>
+          {% endfor %}
+      </div>
+      <button type="submit" class="btn btn-primary align-right" id="next">Próxima Questão</button>
+    </form>
+  </div>
+</div>
+
+{% endblock content %}

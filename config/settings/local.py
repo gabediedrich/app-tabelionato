@@ -25,7 +25,7 @@ CACHES = {
 # DATABASES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
-"""DATABASES = {
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'app_tabelionato',
@@ -34,7 +34,7 @@ CACHES = {
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
-}"""
+}
 
 # EMAIL
 # ------------------------------------------------------------------------------
@@ -67,7 +67,7 @@ INTERNAL_IPS = ["127.0.0.1", "10.0.2.2"]
 # django-extensions
 # ------------------------------------------------------------------------------
 # https://django-extensions.readthedocs.io/en/latest/installation_instructions.html#configuration
-INSTALLED_APPS += ["django_extensions", "quiz"]  # noqa F405
+INSTALLED_APPS += ["django_extensions",]  # noqa F405
 
 # Your stuff...
 # ------------------------------------------------------------------------------

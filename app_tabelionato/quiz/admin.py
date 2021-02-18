@@ -14,10 +14,10 @@ from .models import (
 # Register your models here.
 # admin.site.register()
 admin.site.register(Category)
-admin.site.register(Question)
+#admin.site.register(Question)
 admin.site.register(MultiChoiceQuestion)
 admin.site.register(TrueFalseQuestion)
-admin.site.register(Answer)
+#admin.site.register(Answer)
 admin.site.register(ClosedAnswer)
 
 # TODO criar classes de cadastro

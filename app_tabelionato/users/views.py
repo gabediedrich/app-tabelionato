@@ -21,7 +21,7 @@ user_detail_view = UserDetailView.as_view()
 class UserUpdateView(LoginRequiredMixin, UpdateView):
 
     model = User
-    fields = ["name"]
+    fields = ["fullname", "profile_pic", "small_intro"]
 
     def get_success_url(self):
         return reverse("users:detail", kwargs={"username": self.request.user.username})
@@ -31,7 +31,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         messages.add_message(
-            self.request, messages.INFO, _("Infos successfully updated")
+            self.request, messages.INFO, _("Atualizado com sucesso")
         )
         return super().form_valid(form)
 
