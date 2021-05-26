@@ -11,7 +11,7 @@ SECRET_KEY = env(
     default="iveozTA7woTBgGLe3cNMPprakmIfeNsEZZ8rWaKT7lwjIxHNYUubXDB0VoqloHkk",
 )
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1"]
+ALLOWED_HOSTS = ["app-tabelionato.herokuapp.com", *]
 
 # CACHES
 # ------------------------------------------------------------------------------
@@ -58,3 +58,10 @@ INSTALLED_APPS += ["django_extensions"]  # noqa F405
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+DATABASES = {
+    "default": env.db(
+        "DATABASE_URL",
+        default="postgres://postgres:postgres@127.0.0.1:5432/tabelionato",
+    ),
+}
+DATABASES["default"]["ATOMIC_REQUESTS"] = True
