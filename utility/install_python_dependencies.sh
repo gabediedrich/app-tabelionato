@@ -33,7 +33,5 @@ if [ -z "$VIRTUAL_ENV" ]; then
     echo >&2 -e "\n"
     exit 1;
 else
-
-    pip install -r $PROJECT_DIR/requirements/local.txt
-    pip install -r $PROJECT_DIR/requirements.txt
+    pip install -r $PROJECT_DIR/requirements/local.txtpip install -r $PROJECT_DIR/requirements.txt
 fi

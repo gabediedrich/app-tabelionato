@@ -1,9 +1,9 @@
-.. App Tabelionato documentation master file, created by
+.. tabelionato documentation master file, created by
    sphinx-quickstart.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to App Tabelionato's documentation!
+Welcome to tabelionato's documentation!
 ======================================================================
 
 .. toctree::

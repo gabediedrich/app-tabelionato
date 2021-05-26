@@ -26,7 +26,7 @@ django.setup()
 
 # -- Project information -----------------------------------------------------
 
-project = "App Tabelionato"
+project = "tabelionato"
 copyright = """2021, Gabriel Diedrich"""
 author = "Gabriel Diedrich"
 

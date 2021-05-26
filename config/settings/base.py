@@ -6,8 +6,8 @@ from pathlib import Path
 import environ
 
 ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
-# app_tabelionato/
-APPS_DIR = ROOT_DIR / "app_tabelionato"
+# tabelionato/
+APPS_DIR = ROOT_DIR / "tabelionato"
 env = environ.Env()
 
 READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)
@@ -25,24 +25,24 @@ DEBUG = env.bool("DJANGO_DEBUG", False)
 # In Windows, this must be set to your system time zone.
 TIME_ZONE = "America/Sao_Paulo"
 # https://docs.djangoproject.com/en/dev/ref/settings/#language-code
-LANGUAGE_CODE = "pt-BR"
+LANGUAGE_CODE = "en-us"
 # https://docs.djangoproject.com/en/dev/ref/settings/#site-id
 SITE_ID = 1
 # https://docs.djangoproject.com/en/dev/ref/settings/#use-i18n
-USE_I18N = False
+USE_I18N = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#use-l10n
 USE_L10N = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#use-tz
 USE_TZ = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#locale-paths
-#LOCALE_PATHS = [str(ROOT_DIR / "locale")]
+LOCALE_PATHS = [str(ROOT_DIR / "locale")]
 
 # DATABASES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
 DATABASES = {
-    "default": env.db("DATABASE_URL", default="postgres:///app_tabelionato")
+    "default": env.db("DATABASE_URL", default="postgres://localhost/tabelionato"),
 }
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
@@ -74,9 +74,11 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    "app_tabelionato.users.apps.UsersConfig",
-    # Your stuff: custom apps go here
-    "app_tabelionato.quiz"
+    "tabelionato.users.apps.UsersConfig",
+    # Your stuff: custom apps go here   
+    "tabelionato.quiz",
+    #"tabelionato.blog",
+    #"tabelionato.wiki",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -84,7 +86,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 # MIGRATIONS
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#migration-modules
-MIGRATION_MODULES = {"sites": "app_tabelionato.contrib.sites.migrations"}
+MIGRATION_MODULES = {"sites": "tabelionato.contrib.sites.migrations"}
 
 # AUTHENTICATION
 # ------------------------------------------------------------------------------
@@ -183,7 +185,7 @@ TEMPLATES = [
                 "django.template.context_processors.static",
                 "django.template.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
-                "app_tabelionato.utils.context_processors.settings_context",
+                "tabelionato.utils.context_processors.settings_context",
             ],
         },
     }
@@ -215,7 +217,8 @@ X_FRAME_OPTIONS = "DENY"
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
 EMAIL_BACKEND = env(
-    "DJANGO_EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend"
+    "DJANGO_EMAIL_BACKEND",
+    default="django.core.mail.backends.smtp.EmailBackend",
 )
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-timeout
 EMAIL_TIMEOUT = 5
@@ -225,7 +228,7 @@ EMAIL_TIMEOUT = 5
 # Django Admin URL.
 ADMIN_URL = "admin/"
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
-ADMINS = [("""Gabriel Diedrich""", "gabediedrich@gmail.com")]
+ADMINS = [("""Gabriel Diedrich""", "gabriel-diedrich@example.com")]
 # https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
 
@@ -264,9 +267,9 @@ ACCOUNT_EMAIL_REQUIRED = True
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
-ACCOUNT_ADAPTER = "app_tabelionato.users.adapters.AccountAdapter"
+ACCOUNT_ADAPTER = "tabelionato.users.adapters.AccountAdapter"
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
-SOCIALACCOUNT_ADAPTER = "app_tabelionato.users.adapters.SocialAccountAdapter"
+SOCIALACCOUNT_ADAPTER = "tabelionato.users.adapters.SocialAccountAdapter"
 
 
 # Your stuff...
