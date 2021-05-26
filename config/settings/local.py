@@ -58,11 +58,3 @@ INSTALLED_APPS += ["django_extensions"]  # noqa F405
 
 # Your stuff...
 # ------------------------------------------------------------------------------
-
-DATABASES = {
-    "default": env.db(
-        "DATABASE_URL",
-        default="postgres://postgres:postgres@127.0.0.1:5432/tabelionato",
-    ),
-}
-DATABASES["default"]["ATOMIC_REQUESTS"] = True
