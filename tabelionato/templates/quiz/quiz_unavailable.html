@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% load quiz_tags %}
+
+{% block title %} {{ quiz.title }} {% endblock %}
+{% block description %} {{ quiz.title }} - {{ quiz.description }} {% endblock %}
+
+{% block content %}
+
+
+{% if user.is_authenticated %}
+  <ul class="list-group">
+    <li class="list-group-item list-group-item-danger">
+      {% trans "Você já respondeu esse questionário!" %}
+      
+    </li>
+  </ul>
+  
+{% else %}
+  <p>{% trans "Esse questionário só está disponível para usuários autenticados." %}.</p>
+{% endif %}
+
+{% endblock %}

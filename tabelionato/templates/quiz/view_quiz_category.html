@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans "Categoria: " %} {{ category.category }}{% endblock %}
+
+{% block content %}
+  {% with object_list as quizzes %}
+    {% if quizzes %}
+        <ul>
+        {% for quiz in quizzes %}
+            <li>
+			  <a href="{% url 'quiz_question' quiz_name=quiz.url %}">
+				{{ quiz.title }}
+			  </a>
+			</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>{% trans "Não há nenhum quiz nessa categoria" %}</p>
+    {% endif %}
+  {% endwith %}
+{% endblock %}

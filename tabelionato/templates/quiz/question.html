@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load i18n%}
+
+{% load quiz_tags %}
+
+{% block title %} {{ quiz.title }} {% endblock %}
+
+{% block description %}
+
+<p><big><strong>{{ quiz.title }}</strong></big></p>
+<p><small class="muted">{{ quiz.description }}</small></p>
+
+{% endblock description %}
+
+{% block content %}
+
+{% if question %}
+
+{% if progress %}
+<div style="float: right;">
+{% trans "Pergunta" %} {{ progress.0|add:1 }} {% trans "de" %} {{ progress.1 }}
+</div>
+{% endif %}
+
+<p>
+  <small class="muted">{% trans "Categoria da pergunta" %}:</small>
+  <strong>{{ question.category }}</strong>
+</p>
+
+<p class="lead">{{ question.content|linebreaks }}</p>
+
+<form action="" method="POST">{% csrf_token %}
+  <input type=hidden name="question_id" value="{{ question.id }}">
+
+  <ul class="list-group">
+
+	{% for answer in form.answers %}
+	  <li class="list-group-item">
+	    {{ answer }}
+	  </li>
+	{% endfor %}
+
+  </ul>
+    {% if progress.0|add:1 == progress.1 %}
+    <input type="submit" value={% trans "Enviar" %} class="btn btn-large btn-block btn-info my-2" >
+    {% else %}
+        <input type="submit" value={% trans "Próxima" %} class="btn btn-large btn-block btn-dark my-2" >
+    {% endif %}
+</form>
+
+{% endif %}
+
+<hr>
+
+
+{% endblock %}

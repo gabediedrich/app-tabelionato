@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% load quiz_tags %}
+
+{% block title %} {{ quiz.title}} {% endblock %}
+{% block description %} {% trans "Resultado" %} {{ quiz.title }} {% endblock %}
+
+{% block content %}
+
+  {% if previous.answers %}
+    <h2>{% trans "Revisão" %}</h2>
+    <p class='font-weight-bold h4'>Q{{ previous.previous_question_id }}: {{ previous.previous_question }}</p>
+    <p>Your answer was <strong>{{ previous.previous_outcome|yesno:"correct,incorrect" }}</strong>
+    <span class="text-{{ previous.previous_outcome|yesno:"success,danger" }}"> <i class="far fa-{{ previous.previous_outcome|yesno:"check,times" }}-circle"></i></span> </p>
+    
+    {% include 'quiz/correct_answer.html' %}
+
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <td><strong>{% trans "Explicação" %}:</strong></td>
+        </tr>
+        <tr class="table-success">
+          <td>{{ previous.previous_question.explanation }}</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <hr>
+  {% endif %}
+
+
+  {% if max_score %}
+
+      {% if  sitting.result_message|length  %}
+      <div class="alert alert-{{ sitting.check_if_passed|yesno:"success,danger" }}">
+        <strong>{{ sitting.result_message }}<strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% endif %}
+
+      <h2>{% trans "Performance" %}</h2>
+
+      <table class="table table-bordered">
+        <tbody>
+         <tr>
+          <td>Questinário</td>
+          <td>{{ quiz.title }}</td>
+         </tr>
+         <tr>
+          <td>Resultado</td>
+          <td>{% trans "Você respondeu corretamente " %} {{ score }} {% trans "questões (de " %} {{ max_score }} )</td>
+         </tr>
+         <tr>
+          <td>Score</td>
+          <td>
+            {{ percent }}%
+            <i class="far fa-{{ sitting.check_if_passed|yesno:"smile text-success,frown text-danger" }}"></i>
+          </td>
+         </tr>
+         {% if quiz.pass_mark %}
+         <tr>
+          <td>Status</td>
+          <td class="lead">
+            {{ sitting.result_message }}
+          </td>
+         </tr>
+         {% endif %}
+        </tbody>
+      </table>
+
+      <ul class="list-group">
+        <li class="list-group-item list-group-item-info">
+          {% if user.is_authenticated %}
+             <p>{% trans "Os resultados dessa tentativa serão armazenados." %}</p>
+          {% endif %}
+        </li>
+      </ul>
+      
+
+      
+  {% endif %}
+
+  <hr>
+
+
+  {% if possible %}
+    <p class="lead">{% trans "A sua pontuação total foi" %} {{ session }} {% trans "de" %} {{ possible }}</p>
+    <hr>
+  {% endif %}
+
+  
+  {% if questions %}
+
+    
+    {% for question in questions %} 
+        <p class="font-weight-bold h4">
+          Q{{ question.id }}: {{ question.content }} 
+          <i class="far fa-{{ question.check_if_correct|yesno:"times,check" }}-circle"></i>
+        </p>
+
+        {% correct_answer_for_all question %}
+
+          {% if question.user_answer %}
+
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <td class="font-weight-bold">{% trans "Sua resposta" %}</td>
+                </tr>
+                <tr>
+                  <td>{{ question|answer_choice_to_string:question.user_answer }}</td>
+                <tr>
+              </tbody>
+            </table>
+         
+          {% endif %}
+
+        {% if question.explanation|has_content%}
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-success">
+              <p class="font-weight-bold">{% trans "Explicação" %}:</p>
+              <p class="font-italic">{{ question.explanation|safe }}</p>
+            </li>
+        </ul>
+        {% endif %}
+        
+        
+        <hr>
+    {% endfor %}
+
+  {% endif %}
+
+
+{% endblock %}

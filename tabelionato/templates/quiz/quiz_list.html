@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load quiz_tags %}
+{% block title %}{% trans "All Quizzes" %}{% endblock %}
+
+{% block content %}
+	<h2 class="text-center my-3">{% trans "Quizzes" %}</h2>
+	{% if quiz_list %}
+		<div class="table-responsive-sm">
+			<caption class="my-2">Questionários disponíveis</caption>
+			<table class="table">
+				<thead class="thead">
+					<tr>
+					<th>{% trans "Título" %}</th>
+					<th>{% trans "Categoria" %}</th>
+					<th>{% trans "Tentativa única" %}</th>
+					<th></th>
+					</tr>
+				</thead>
+
+				<tbody>
+
+				{% for quiz in quiz_list %}
+
+					<tr>
+					<td>{{ quiz.title }}</td>
+					<td>{{ quiz.category }}</td>
+
+					{% if quiz.single_attempt %}
+						<td class="text-success"><i class="far fa-check-circle"></i></td>
+					{% else %}
+						<td class="text-danger"><i class="far fa-times-circle"></i></td>
+					{% endif %}
+					
+					<td><a href="../{{quiz.url}}/take" role="button" class="btn btn-primary btn-rounded btn-block">
+					{% trans "Responder" %}</a>
+					</td>
+
+					</tr>
+
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+
+	{% else %}
+		<p>{% trans "There are no available quizzes" %}.</p>
+	{% endif %}
+{% endblock %}
