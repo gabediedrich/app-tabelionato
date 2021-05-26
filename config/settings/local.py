@@ -11,7 +11,7 @@ SECRET_KEY = env(
     default="iveozTA7woTBgGLe3cNMPprakmIfeNsEZZ8rWaKT7lwjIxHNYUubXDB0VoqloHkk",
 )
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ["app-tabelionato.herokuapp.com", *]
+ALLOWED_HOSTS = ["app-tabelionato.herokuapp.com", "*"]
 
 # CACHES
 # ------------------------------------------------------------------------------
